@@ -24,28 +24,13 @@ export class BuscarPartidoComponent implements OnInit{
   resultados: any
   id: number;
   idParametro: number;
-  formBusqueda: FormGroup;
   apiservice: ApiService= new ApiService(this.http);
   constructor(private router: Router, private http: HttpClient, private formBuilder: FormBuilder, private route: ActivatedRoute){
     this.idParametro = 0;
     this.id = 0;
-    this.formBusqueda = this.formBuilder.group({
-      id: [Number(''), [Validators.required, Validators.min(1)]]
-    });
   }
   ngOnInit(): void {
     this.mostrarTodos();
-  }
-  
-  onSubmit(){
-    console.log("Buscando Partido");
-    this.convertirFormBusquedaAid();
-    console.log(this.id);
-    this.router.navigate(['/partidos',this.id])
-  }
-  convertirFormBusquedaAid(){
-    console.log("Convirtiendo Formulario de Búsqueda a ID");
-    this.id=(this.formBusqueda.get('id')?.value);
   }
   mostrarTodos(){
     console.log("Mostrando todos los partidos");

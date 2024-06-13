@@ -1,9 +1,6 @@
 <div class = "container_partido">
-    <div *ngIf="errorMessage">
-        <p>{{ errorMessage }}</p>
-    </div>
-    <div *ngIf="!errorMessage && jsonData">
-        <h1 class = "titulo">Partido: {{jsonData.id}}</h1>
+    <div *ngIf="jsonData">
+        <h1 class = "titulo">Partido: {{jsonData._id}}</h1>
         <a [routerLink]="['/tenistas', jsonData.jugador1.id]">Jugador 1: {{jsonData.jugador1.nombre}}</a>
         <a [routerLink]="['/tenistas', jsonData.jugador2.id]">Jugador 2: {{jsonData.jugador2.nombre}}</a>
         <p>Ganador: {{jsonData.ganador.nombre}}</p>
@@ -16,8 +13,8 @@
             <li>{{jsonData.sets[4].puntaje1}} - {{jsonData.sets[4].puntaje2}}</li>
         </ul>
         <div class="button_container">
-            <button (click)="modificarPartido(jsonData.id)">Modificar</button>
-            <button (click)="eliminarPartido(jsonData.id)" >Eliminar</button>
+            <button (click)="modificarPartido(jsonData._id)">Modificar</button>
+            <button (click)="eliminarPartido(jsonData._id)" >Eliminar</button>
         </div>
     </div>
 </div>

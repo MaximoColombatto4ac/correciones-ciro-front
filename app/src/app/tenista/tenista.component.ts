@@ -21,13 +21,11 @@ export class TenistaComponent {
   
   jsonData: any;
   apiservice: ApiService= new ApiService(this.http);
-  id: number
-  errorMessage: string;
-  constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute) { this.id=0
-    this.errorMessage = '';
+  id!: string
+  constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute){ 
+    
     this.route.params.subscribe(params=>{
-      this.id=params['id']
-      console.log(this.id)
+      this.id = params['id']
       this.getTenista(this.id);
     }) }
   modificar(id: any){
@@ -41,13 +39,8 @@ export class TenistaComponent {
       this.router.navigate(['/buscarTenista'])
     });
   }
-  getTenista(id: number){
-    this.apiservice.getTenista(id).pipe(catchError((error) => {
-        console.error(error);
-        this.errorMessage = 'No se encontró el tenista con el ID ingresado';
-        return of(null); 
-      })
-    ).subscribe((data: any) =>{
+  getTenista(id: string){
+    this.apiservice.getTenista(id).subscribe((data: any) =>{
       this.jsonData=data;
       console.log(this.jsonData)
     });

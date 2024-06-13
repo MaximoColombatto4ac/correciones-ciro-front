@@ -1,8 +1,4 @@
-export class SetTenis{
-    puntaje1: number;
-    puntaje2: number;
-    constructor(){
-        this.puntaje1 = 0;
-        this.puntaje2 = 0;
-    }
+export interface SetTenis{
+    jugador1Puntaje: number;
+    jugador2Puntaje: number;
 }

@@ -1,8 +1,5 @@
 <div>
-    <div *ngIf="errorMessage">
-        <p>{{ errorMessage }}</p>
-    </div>
-    <div *ngIf="!errorMessage && jsonData">
+    <div *ngIf="jsonData">
         <h1>Detalles del Tenista</h1>
         <p>Nombre: {{jsonData.nombre}}</p>
         <p>Edad: {{jsonData.edad}}</p>
@@ -10,10 +7,9 @@
         <p>País: {{jsonData.pais}}</p>
         <p>Altura: {{jsonData.altura}}</p>
         <p>Peso: {{jsonData.peso}}</p>
-        <p>Titulos ATP: {{jsonData.titulos.ATP}}</p>
-        <p>Titulos Challenger: {{jsonData.titulos.Challenger}}</p>
-        <button (click)="modificar(jsonData.id)">Modificar</button>
-        <button (click)="eliminarTenista(jsonData.id)" >Eliminar</button>
+        <p>Titulos: {{jsonData.titulos}}</p>
+        <button (click)="modificar(jsonData._id)">Modificar</button>
+        <button (click)="eliminarTenista(jsonData._id)" >Eliminar</button>
     </div>
 </div>
 

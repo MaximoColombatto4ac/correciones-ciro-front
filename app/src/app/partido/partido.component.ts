@@ -19,21 +19,14 @@ throw new Error('Method not implemented.');
 }
   jsonData: any;
   apiservice: ApiService= new ApiService(this.http);
-  id: number
-  errorMessage: string;
-  constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute) { this.id=0
-    this.errorMessage = '';
+  id!: number
+  constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute) {
     this.route.params.subscribe(params=>{
       this.id=params['id']
-      console.log(this.id)
       this.getPartido(this.id);
     }) }
   getPartido(id: any){
-    this.apiservice.getPartido(id).pipe(catchError((error) => {
-      console.error(error);
-      this.errorMessage = 'No se encontró el partido con el ID ingresado'; 
-      return of(null); 
-    })).subscribe((data: any) =>{
+    this.apiservice.getPartido(id).subscribe((data: any) =>{
       this.jsonData=data;
       console.log(this.jsonData)
     });

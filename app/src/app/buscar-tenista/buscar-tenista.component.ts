@@ -22,27 +22,15 @@ export class BuscarTenistaComponent {
   resultados: any
   id: number;
   idParametro: number;
-  formBusqueda: FormGroup;
   apiservice: ApiService= new ApiService(this.http);
   constructor (private router: Router, private http: HttpClient, private formBuilder: FormBuilder, private route: ActivatedRoute){
     this.id = 0;
     this.idParametro=0;
-    this.formBusqueda = this.formBuilder.group({
-      id: [Number(''), [Validators.required, Validators.min(1)]]
-    })
     this.tenistaList = this.mostrarTodos();
     this.resultados = this.tenistaList;
   }
   onInit(){
     this.mostrarTodos();
-  }
-  onSubmit(){
-    console.log("Buscando Tenista");
-    this.convertirFormBusquedaAid();
-    this.router.navigate(['/tenistas',this.id])
-  }
-  convertirFormBusquedaAid(){
-    this.id=(this.formBusqueda.get('id')?.value);
   }
   mostrarTodos(){
     this.apiservice.getTenistas().subscribe((data: any)=>{
