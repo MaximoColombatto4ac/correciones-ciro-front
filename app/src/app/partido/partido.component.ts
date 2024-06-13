@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { catchError } from 'rxjs/internal/operators/catchError';
 import { of } from 'rxjs/internal/observable/of';
+import { Tenista } from '../tenista/tenista';
 @Component({
   selector: 'app-partido',
   standalone: true,
@@ -20,6 +21,8 @@ throw new Error('Method not implemented.');
   jsonData: any;
   apiservice: ApiService= new ApiService(this.http);
   id!: number
+  jugador1!: Tenista;
+  jugador2!: Tenista;
   constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute) {
     this.route.params.subscribe(params=>{
       this.id=params['id']
@@ -28,6 +31,13 @@ throw new Error('Method not implemented.');
   getPartido(id: any){
     this.apiservice.getPartido(id).subscribe((data: any) =>{
       this.jsonData=data;
+      this.apiservice.getTenista(this.jsonData.jugador1).subscribe((data: any) =>{
+        this.jugador1 = data;
+      })
+      this.apiservice.getTenista(this.jsonData.jugador2).subscribe((data: any) =>{
+        this.jugador2 = data;
+      })
+      
       console.log(this.jsonData)
     });
   }

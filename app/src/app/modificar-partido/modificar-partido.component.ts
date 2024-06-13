@@ -27,7 +27,6 @@ export class ModificarPartidoComponent implements OnInit {
 
   constructor(private http: HttpClient, private formBuilder: FormBuilder, private route: ActivatedRoute) {
     this.partidoForm = this.formBuilder.group({
-      id: '',
       jugador1: '',
       jugador2: '',
       ganador: '',
@@ -56,9 +55,8 @@ export class ModificarPartidoComponent implements OnInit {
       this.jsonData = data;
       console.log(this.jsonData);
       this.partidoForm.patchValue({
-        id: this.jsonData.id,
-        jugador1: this.jsonData.jugador1,
-        jugador2: this.jsonData.jugador2,
+        jugador1: this.jsonData?.jugador1,
+        jugador2: this.jsonData?.jugador2,
         ganador: this.jsonData.ganador,
         ResJ1Set1: this.jsonData.sets[0]?.jugador1Puntaje,
         ResJ2Set1: this.jsonData.sets[0]?.jugador2Puntaje,
@@ -76,9 +74,28 @@ export class ModificarPartidoComponent implements OnInit {
 
   modificar() {
     console.log("Modificando partido");
-    this.partido = this.partidoForm.value;
-    this.partido.sets = this.generarSets();
-    this.apiservice.modificarPartido(this.partido.id, this.partido).subscribe(data => {
+    const sets: SetTenis[] = [];
+    for (let i = 1; i <= 5; i++) {
+      const set: SetTenis = {
+        jugador1Puntaje: Number(this.partidoForm.get('ResJ1Set' + i)?.value),
+        jugador2Puntaje: Number(this.partidoForm.get('ResJ2Set' + i)?.value)
+      };
+      sets.push(set);
+    }
+
+    const id1 = this.partidoForm.get('jugador1')?.value;
+    const id2 = this.partidoForm.get('jugador2')?.value;
+    const id3 = this.partidoForm.get('ganador')?.value;
+
+    this.partido = {
+      _id: this.id,
+      jugador1: id1,
+      jugador2: id2,
+      ganador: id3,
+      sets: sets
+    };
+    console.log(this.partido);
+    this.apiservice.modificarPartido(this.partido._id, this.partido).subscribe(data => {
       console.log(data);
     });
   }

@@ -29,12 +29,21 @@ export class EditarTenistaComponent {
       edad:  Number(''),
       perfilATP: '',
       pais: '',
-      titulosAtp: Number(''),
-      titulosChall: Number('') 
+      titulos: Number('')
     });
   }
   onSubmit(){
     console.log("Subiendo tenista");
+    this.tenista = {
+      _id: '',
+      nombre: this.tenistaForm.value.nombre,
+      peso: this.tenistaForm.value.peso,
+      altura: this.tenistaForm.value.altura,
+      edad: this.tenistaForm.value.edad,
+      perfilATP: this.tenistaForm.value.perfilATP,
+      pais: this.tenistaForm.value.pais,
+      titulos: this.tenistaForm.value.titulos,
+    }
     this.apiserivce.addTenista(this.tenista).subscribe(data => {
       console.log(data);
     });

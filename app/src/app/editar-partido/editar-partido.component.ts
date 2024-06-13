@@ -42,18 +42,29 @@ export class EditarPartidoComponent {
   }
   async onSubmit(){
     console.log("Subiendo partido");
+    // Generar los sets
+    const sets: SetTenis[] = [];
+    for (let i = 1; i <= 5; i++) {
+      const set: SetTenis = {
+        jugador1Puntaje: Number(this.partidoForm.get('ResJ1Set' + i)?.value),
+        jugador2Puntaje: Number(this.partidoForm.get('ResJ2Set' + i)?.value)
+      };
+      sets.push(set);
+    }
+    const id1 = this.partidoForm.get('id1')?.value;
+    const id2 = this.partidoForm.get('id2')?.value;
+    const id3 = this.partidoForm.get('id3')?.value;
+
+    this.partido = {
+      _id: "",
+      jugador1: id1,
+      jugador2: id2,
+      ganador: id3,
+      sets: sets
+    };
+
     this.apiserivce.addPartido(this.partido).subscribe(data => {
       console.log(data);
     });
-  }
-  generarSets(): any{
-    let sets: SetTenis[] = [];
-    for (let i = 1; i <= 5; i++) {
-      let aux!: SetTenis;
-      aux.jugador1Puntaje = this.partidoForm.get('ResJ1Set' + i)?.value;
-      aux.jugador2Puntaje = this.partidoForm.get('ResJ2Set' + i)?.value;
-      sets.push(aux);
-    }
-    return sets
   }
 }

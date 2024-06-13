@@ -25,7 +25,6 @@ export class ModificarTenistaComponent implements OnInit {
 
   constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute, private formBuilder: FormBuilder) {
     this.tenistaForm = this.formBuilder.group({
-      _id: '',
       nombre: '',
       peso: 0,
       altura: 0,
@@ -43,11 +42,14 @@ export class ModificarTenistaComponent implements OnInit {
     });
   }
 
+
   modificar() {
     console.log("Modificando tenista");
     this.tenista = this.tenistaForm.value;
+    this.tenista._id = this.id;
+    console.log(this.tenista);
     this.apiservice.modificarTenista(this.tenista).subscribe(data => {
-      console.log(data);
+    console.log(data);
     });
   }
 
@@ -56,7 +58,6 @@ export class ModificarTenistaComponent implements OnInit {
       this.jsonData = data;
       console.log(this.jsonData);
       this.tenistaForm.patchValue({
-        _id: this.jsonData._id,
         nombre: this.jsonData.nombre,
         peso: this.jsonData.peso,
         altura: this.jsonData.altura,

@@ -28,10 +28,10 @@ export class ApiService {
         return aux;
     }
     
-    addTenista(tenista: Tenista) {
-        console.log(tenista);
+    addTenista(info: Tenista) {
+        console.log(info);
         return this.http.post(
-            `${this.urlApi}${this.tenistaApi}`, tenista
+            `${this.urlApi}${this.tenistaApi}`, {tenista:info}
         );
     }
     
@@ -39,7 +39,7 @@ export class ApiService {
         console.log(tenista);
         
         return this.http.patch(
-            `${this.urlApi}${this.tenistaApi}`, tenista
+            `${this.urlApi}${this.tenistaApi}`, {tenista: tenista}
         );
     }
     
@@ -74,7 +74,7 @@ export class ApiService {
     
     modificarPartido(id: any, partido: any) {
         return this.http.patch(
-            `${this.urlApi}${this.partidoApi}/${id}`, partido
+            `${this.urlApi}${this.partidoApi}`, partido
         );
     }
     

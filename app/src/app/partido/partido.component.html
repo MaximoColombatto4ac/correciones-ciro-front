@@ -1,13 +1,13 @@
 <div class = "container_partido">
     <div *ngIf="jsonData">
         <h1 class = "titulo">Partido: {{jsonData._id}}</h1>
-        <a [routerLink]="['/tenistas', jsonData.jugador1.id]">Jugador 1: {{jsonData.jugador1.nombre}}</a>
-        <a [routerLink]="['/tenistas', jsonData.jugador2.id]">Jugador 2: {{jsonData.jugador2.nombre}}</a>
-        <p>Ganador: {{jsonData.ganador.nombre}}</p>
+        <a [routerLink]="['/tenistas', jsonData.jugador1.id]">Jugador 1: {{jugador1.nombre}}</a> <br>
+        <a [routerLink]="['/tenistas', jsonData.jugador2.id]">Jugador 2: {{jugador2.nombre}}</a>
+        <p>Ganador: {{jsonData.ganador == jugador1._id ? jugador1.nombre : jugador2.nombre }}</p>
         <p class="titulo_sets"> Sets: </p>
         <ul>
-            <li>{{jsonData.sets[0].puntaje1}} - {{jsonData.sets[0].puntaje2}}</li>
-            <li>{{jsonData.sets[1].puntaje1}} - {{jsonData.sets[1].puntaje2}}</li>
+            <li>{{jsonData.sets[0].jugador1Puntaje}} - {{jsonData.sets[0].jugador2Puntaje}}</li>
+            <li>{{jsonData.sets[1].jugador1Puntaje}} - {{jsonData.sets[1].jugador2Puntaje}}</li>
             <li>{{jsonData.sets[2].puntaje1}} - {{jsonData.sets[2].puntaje2}}</li>
             <li>{{jsonData.sets[3].puntaje1}} - {{jsonData.sets[3].puntaje2}}</li>
             <li>{{jsonData.sets[4].puntaje1}} - {{jsonData.sets[4].puntaje2}}</li>
