@@ -1,15 +1,25 @@
-<div>
-    <div *ngIf="jsonData">
-        <h1>Detalles del Tenista</h1>
-        <p>Nombre: {{jsonData.nombre}}</p>
-        <p>Edad: {{jsonData.edad}}</p>
-        <p>Ranking: {{jsonData.ranking}}</p>
-        <p>País: {{jsonData.pais}}</p>
-        <p>Altura: {{jsonData.altura}}</p>
-        <p>Peso: {{jsonData.peso}}</p>
-        <p>Titulos: {{jsonData.titulos}}</p>
-        <button (click)="modificar(jsonData._id)">Modificar</button>
-        <button (click)="eliminarTenista(jsonData._id)" >Eliminar</button>
+<div *ngIf="jsonData">
+  <div >
+    <h1>Detalles del Tenista</h1>
+    <p>Nombre: {{ jsonData.nombre }}</p>
+    <p>Edad: {{ jsonData.edad }}</p>
+    <p>Ranking: {{ jsonData.ranking }}</p>
+    <p>País: {{ jsonData.pais }}</p>
+    <p>Altura: {{ jsonData.altura }}</p>
+    <p>Peso: {{ jsonData.peso }}</p>
+    <p>Titulos: {{ jsonData.titulos }}</p>
+    <button (click)="modificar(jsonData._id)">Modificar</button>
+    <button (click)="eliminarTenista(jsonData._id)">Eliminar</button>
+  </div>
+  <h1>Partidos</h1>
+  <div class="container_partidos">
+    <div class="partido" *ngFor="let partido of partidos">
+      <div *ngIf="this.getJugadorNombres(partido._id) as nombres">
+        <!--  conseguis los jugadores con el nombre de "nombres" -->
+        <a class="link_partido" [routerLink]="['/partidos', partido._id]"
+          >{{ nombres.jugador1 }} - {{ nombres.jugador2 }}</a
+        >
+      </div>
     </div>
+  </div>
 </div>
-

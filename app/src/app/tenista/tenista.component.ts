@@ -1,19 +1,16 @@
 import { Component, Inject, InjectorType, Input, NgModule, OnInit, input} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgFor } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { NgFor, NgIf } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiService } from '../api.server';
 import { HttpClient } from '@angular/common/http';
 import { NgComponentOutlet } from '@angular/common';
-import { inject } from '@angular/core';
-import { Tenista } from './tenista';
-import { catchError } from 'rxjs/internal/operators/catchError';
-import { of } from 'rxjs/internal/observable/of';
+
 
 @Component({
   selector: 'app-tenista',
   standalone: true,
-  imports: [CommonModule, NgFor, NgComponentOutlet],
+  imports: [CommonModule, NgFor, NgIf, NgComponentOutlet, RouterLink],
   templateUrl: './tenista.component.html',
   styleUrl: './tenista.component.css'
 })
@@ -21,6 +18,7 @@ export class TenistaComponent {
   
   jsonData: any;
   partidos: any[] = [] // agregi un array partidos
+  jugadorNombres: Map<string, { jugador1: string, jugador2: string }> = new Map(); // almacena llave (id del partido) y valor (nombre de los jugadores)
   apiservice: ApiService= new ApiService(this.http);
   id!: string
   constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute){ 
@@ -64,7 +62,25 @@ export class TenistaComponent {
       }
   
       console.log(this.partidos); // Mostrar los partidos filtrados y limitados
+      this.cargarNombresJugadores(this.partidos)
     });
   }
+  cargarNombresJugadores(partidos: any[]): void {
+    partidos.forEach(partido => { // recorro uno por uno todos los partidos
+      const jugador1Id = partido.jugador1;
+      const jugador2Id = partido.jugador2;
+
+      this.apiservice.getTenista(jugador1Id).subscribe((jugador1Name: any) => {
+        this.apiservice.getTenista(jugador2Id).subscribe((jugador2Name: any) => {
+          this.jugadorNombres.set(partido._id, { jugador1: jugador1Name.nombre, jugador2: jugador2Name.nombre }); // le pongo como llave el id del partido y como valor los jugadores
+          console.log(this.jugadorNombres);
+          console.log(jugador1Name, jugador2Name);
+        });
+      });
+    });
+  } 
   
+  getJugadorNombres(partidoId: string): { jugador1: string, jugador2: string } | null { // consigue jugadores
+    return this.jugadorNombres.get(partidoId) || null;
+  }
 }

@@ -32,11 +32,11 @@ export class BuscarPartidoComponent implements OnInit{
     this.apiservice.getPartidos().subscribe((data: any)=>{
       console.log(data);
       this.partidos = data;
-      this.cargarNombresJugadores();
+      this.cargarNombresJugadores(this.partidos);
     });
   }
-  cargarNombresJugadores(): void { //
-    this.partidos.forEach(partido => { // recorro uno por uno todos los partidos
+  cargarNombresJugadores(partidos: any[]): void { //
+    partidos.forEach(partido => { // recorro uno por uno todos los partidos
       const jugador1Id = partido.jugador1;
       const jugador2Id = partido.jugador2;
 
