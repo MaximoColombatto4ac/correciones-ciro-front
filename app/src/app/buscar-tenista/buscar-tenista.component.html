@@ -1,7 +1,29 @@
-
+<div class="search-container">
+    <input type="text" placeholder="Buscar tenista..." (input)="onSearch($event)">
+</div>
 <h1>Tenistas</h1>
-<div class="container_tenistas">
+<div class="tenista-list">
     <div class="tenista" *ngFor="let tenista of resultados" >
         <a class="link_tenista" [routerLink]="['/tenistas',tenista._id]">{{tenista.nombre}}</a>
     </div>
 </div>
+<style>
+    .search-container {
+        margin-bottom: 20px;
+    }
+
+    .search-container input {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+
+    .tenista-list {
+        margin-top: 20px;
+    }
+
+    .tenista-list div {
+        padding: 8px;
+        border-bottom: 1px solid #ccc;
+    }
+</style>

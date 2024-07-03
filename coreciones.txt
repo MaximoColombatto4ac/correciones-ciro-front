@@ -1,0 +1,6 @@
+tares: 
+	- rellenar datos al modificar	|	Listo 	| ir a las carpetas de modificar partido y tenistas y buscar el formbuilder y patchvalue
+	- estilos para los sets		|	Listo 	| vas a las carpetas modificar y editar partido y le mostras los css que estan en los archivos html
+	- buscar tenista por nombre	|	Listo 	| ir a buscar tenista y mostrar el input que agregaste en el html que llama a la funcion onSerch la cual filtra los resultados que contengan el valor del input
+	- solucionar vista partido 	|	Listo 	| ir a buscar partido y mostrar el atributo jugadorNombres que es un map y la funcion de cargarNombreJugador y luego mostrar el html.
+	- ultimos 5 partido tenista 	|	%	| ir a tenista y mostrar la funcion getPartidoTensita y luego el html.

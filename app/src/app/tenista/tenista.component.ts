@@ -20,6 +20,7 @@ import { of } from 'rxjs/internal/observable/of';
 export class TenistaComponent {
   
   jsonData: any;
+  partidos: any[] = [] // agregi un array partidos
   apiservice: ApiService= new ApiService(this.http);
   id!: string
   constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute){ 
@@ -27,7 +28,9 @@ export class TenistaComponent {
     this.route.params.subscribe(params=>{
       this.id = params['id']
       this.getTenista(this.id);
-    }) }
+    })
+    this.getPartidosTenista(this.id);  // llamo a esta funcion que trae los partidos del tenista
+  }
   modificar(id: any){
     console.log("Modificando Tenista")
     this.router.navigate(['/modificarTenista', id])
@@ -45,4 +48,23 @@ export class TenistaComponent {
       console.log(this.jsonData)
     });
   }
+  getPartidosTenista(id: string) {
+    this.apiservice.getPartidos().subscribe((data: any) => {
+      // Obtener todos los partidos y lo asigna al array
+      this.partidos = data; 
+  
+      // Filtrar partidos según el id del jugador actual
+      this.partidos = this.partidos.filter((partido: any) =>
+        partido.jugador1 === id || partido.jugador2 === id
+      );
+  
+      // Limitar a máximo 5 partidos si hay más
+      if (this.partidos.length > 5) {
+        this.partidos = this.partidos.slice(0, 5);
+      }
+  
+      console.log(this.partidos); // Mostrar los partidos filtrados y limitados
+    });
+  }
+  
 }

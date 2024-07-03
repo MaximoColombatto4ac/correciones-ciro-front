@@ -20,24 +20,37 @@ import { OnInit } from '@angular/core';
   styleUrl: './buscar-partido.component.css'
 })
 export class BuscarPartidoComponent implements OnInit{
-  partidoList: any
-  resultados: any
-  id: number;
-  idParametro: number;
+  partidos: any[] = [];
+  jugadorNombres: Map<string, { jugador1: string, jugador2: string }> = new Map(); // almacena llave (id del partido) y valor (nombre de los jugadores)
   apiservice: ApiService= new ApiService(this.http);
   constructor(private router: Router, private http: HttpClient, private formBuilder: FormBuilder, private route: ActivatedRoute){
-    this.idParametro = 0;
-    this.id = 0;
   }
   ngOnInit(): void {
     this.mostrarTodos();
   }
   mostrarTodos(){
-    console.log("Mostrando todos los partidos");
     this.apiservice.getPartidos().subscribe((data: any)=>{
       console.log(data);
-      this.partidoList = data;
-      this.resultados = this.partidoList;
+      this.partidos = data;
+      this.cargarNombresJugadores();
     });
+  }
+  cargarNombresJugadores(): void { //
+    this.partidos.forEach(partido => { // recorro uno por uno todos los partidos
+      const jugador1Id = partido.jugador1;
+      const jugador2Id = partido.jugador2;
+
+      this.apiservice.getTenista(jugador1Id).subscribe((jugador1Name: any) => {
+        this.apiservice.getTenista(jugador2Id).subscribe((jugador2Name: any) => {
+          this.jugadorNombres.set(partido._id, { jugador1: jugador1Name.nombre, jugador2: jugador2Name.nombre }); // le pongo como llave el id del partido y como valor los jugadores
+          console.log(this.jugadorNombres);
+          console.log(jugador1Name, jugador2Name);
+          
+        });
+      });
+    });
+  } 
+  getJugadorNombres(partidoId: string): { jugador1: string, jugador2: string } | null { // consigue jugadores
+    return this.jugadorNombres.get(partidoId) || null;
   }
 }

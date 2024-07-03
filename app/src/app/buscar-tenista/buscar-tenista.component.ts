@@ -18,25 +18,25 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './buscar-tenista.component.css'
 })
 export class BuscarTenistaComponent {
-  tenistaList: any
-  resultados: any
-  id: number;
-  idParametro: number;
+  tenistaList: any[] = []
+  resultados: any[] = []
   apiservice: ApiService= new ApiService(this.http);
   constructor (private router: Router, private http: HttpClient, private formBuilder: FormBuilder, private route: ActivatedRoute){
-    this.id = 0;
-    this.idParametro=0;
-    this.tenistaList = this.mostrarTodos();
-    this.resultados = this.tenistaList;
+    this.mostrarTodos();
   }
   onInit(){
-    this.mostrarTodos();
   }
   mostrarTodos(){
     this.apiservice.getTenistas().subscribe((data: any)=>{
       console.log(data);
       this.tenistaList = data;
-      this.resultados = this.tenistaList;
+      this.resultados = data;
     });
+  }
+  onSearch(event: any): void {
+    const searchTerm = event.target.value.toLowerCase();
+    this.resultados = this.tenistaList.filter(tenista =>
+      tenista.nombre.toLowerCase().includes(searchTerm)
+    );
   }
 }

@@ -1,7 +1,9 @@
 
 <h1>Partidos</h1>
 <div class="container_partidos">
-    <div class="partido" *ngFor="let partido of resultados">
-        <a class="link_partido" [routerLink]="['/partidos',partido._id]">{{partido._id}}</a>
+    <div class="partido" *ngFor="let partido of partidos">
+        <div *ngIf="this.getJugadorNombres(partido._id) as nombres"> <!--  conseguis los jugadores con el nombre de "nombres" -->
+            <a class="link_partido" [routerLink]="['/partidos',partido._id]">{{nombres.jugador1}} - {{nombres.jugador2}}</a> 
+        </div>
     </div>
 </div>
